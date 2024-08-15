@@ -3,9 +3,15 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 require('dotenv').config()
 
 const TARGET = process.env.TARGET
+const PORT = process.env.PORT
+
 if (!TARGET) {
     throw new Error('TARGET is not defined')
 }
+if (!PORT) {
+    throw new Error('PORT is not defined')
+}
+
 const app = express()
 
 app.use(
@@ -35,7 +41,6 @@ app.use(
 )
 
 
-const PORT = 5002
 app.listen(PORT, () => {
     console.log(`Server running on PORT ${PORT}`)
 })
