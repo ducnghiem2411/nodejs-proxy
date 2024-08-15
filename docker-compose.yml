@@ -1,12 +1,21 @@
-version: "3.7"
+version: '3.7'
 
 services:
-  base-ts-node:
-    container_name: base-ts-node
+  proxy_1:
+    container_name: proxy_1
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "$PORT:$PORT"
+      - '$PORT_1:$PORT_1'
+    env_file: .env
+    restart: always
+  proxy_2:
+    container_name: proxy_2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '$PORT_2:$PORT_2'
     env_file: .env
     restart: always
