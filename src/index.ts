@@ -63,8 +63,7 @@ app2.use(
         target: TARGET_2,
         changeOrigin: true,
         on: {
-            proxyReq: (proxyReq) => {
-                // Enable CORS
+            proxyReq: (proxyReq, req, res) => {
                 proxyReq.setHeader('Access-Control-Allow-Origin', '*')
                 console.log(`Forwarded ${proxyReq.method} ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`)
 
@@ -72,6 +71,10 @@ app2.use(
                 proxyReq.removeHeader('User-Agent')
                 proxyReq.removeHeader('Origin')
                 proxyReq.removeHeader('Referer')
+
+                proxyReq.setHeader('User-Agent', 'Server/1.0')
+                proxyReq.setHeader('X-Server-Name', 'MyProxyServer')
+                proxyReq.setHeader('Content-Type', 'application/json')
             },
 
             proxyRes: (proxyRes, req, res) => {
